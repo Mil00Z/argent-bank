@@ -1,0 +1,33 @@
+:root{
+  --primary-color:#00bc77;
+  --secondary-color:#2c3e50;
+
+
+  --font-family:'Avenir', 'Helvetica', 'Arial', sans-serif;
+  --font-family-size:1rem;
+
+  --text-color:var(--secondary-color);
+  --debeug-color:var(--primary-color);
+
+  --reg-spacing:1.25rem;
+  --skeleton:90%;
+  
+}
+
+
+body {
+  
+  margin: 0;
+  font : {
+    family:var(--font-family);
+    size:var(--font-family-size);
+  }
+  color:var(--text-color)
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  // max-width: var(--skeleton);
+}
