@@ -14,7 +14,7 @@ import '@styles/main.scss'
 
 
 
-const router = createBrowserRouter([
+ const router = createBrowserRouter([
   {
     path: '/',
     element: <Root />,
@@ -22,18 +22,22 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home />,
+        pageClasses :'home'
       },
       {
         path: '/signin',
         element: <SignIn />,
+        pageClasses :'signin bg-dark'
       },
       {
         path: '/user',
         element: <User />,
+        pageClasses :'user'
       },
       {
         path: "*",
-        element: <NotFound />}
+        element: <NotFound />,
+        pageClasses :'debeug'}
     ]
   },
 ])
@@ -41,5 +45,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
-)
+  </StrictMode>
+);
+
+export default router;
