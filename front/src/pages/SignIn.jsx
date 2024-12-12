@@ -2,9 +2,8 @@ import { Link } from 'react-router';
 import '@styles/pages/_Signin.scss';
 
 const SignIn = () => {
+  
   return (
-    <main className="main bg-dark">
-
       <section className="sign-in-content">
         <i className="fa fa-user-circle sign-in-icon"></i>
         <h1>Sign In</h1>
@@ -27,8 +26,6 @@ const SignIn = () => {
           <button className="sign-in-button">Sign In</button>
         </form>
       </section>
-
-    </main>
   )
 
 }
