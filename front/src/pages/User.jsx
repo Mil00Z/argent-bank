@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {useOutletContext} from 'react-router'
 
 import {Link} from 'react-router'
 
@@ -10,6 +11,10 @@ import '@styles/pages/_User.scss'
 const User = () => {
 
   const [logged,isLogged] = useState(true);
+  const {user} = useOutletContext();
+
+  
+
 
   return(
   <>
@@ -18,11 +23,11 @@ const User = () => {
       <NavigationLogged layout={logged} />
       
         <div className="header">
-          <h1>Welcome back<br />Tony Jarvis!</h1>
+          <h1 class="main-title">Welcome back<br />{user.firstName} {user.lastName}</h1>
           <button className="edit-button">Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
-        <section className="account">
+        <section className="account" data-user={user.id}>
           <div className="account-content-wrapper">
             <h3 className="account-title">Argent Bank Checking (x8349)</h3>
             <p className="account-amount">$2,082.79</p>

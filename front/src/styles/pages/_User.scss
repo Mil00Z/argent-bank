@@ -1,8 +1,23 @@
-.user{
+
+.user {
 
   background-color: #12002b;
+
+  .main-title {
+    text-align: center;
+  }
+
 }
 
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--white-color);
+  margin-bottom: 2rem;
+  padding-inline: var(--reg-spacing);
+}
 
 
 .account {
@@ -50,11 +65,7 @@
   padding: 10px;
 }
 
-.header {
-  color: #fff;
-  margin-bottom: 2rem;
-  padding-inline: var(--reg-spacing);
-}
+
 
 .transaction-button {
   display: block;
