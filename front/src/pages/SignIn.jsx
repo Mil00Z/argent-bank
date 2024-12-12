@@ -1,7 +1,9 @@
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 import '@styles/pages/_Signin.scss';
 
 const SignIn = () => {
+
+
   
   return (
       <section className="sign-in-content">
