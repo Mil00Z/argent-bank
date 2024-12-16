@@ -14,8 +14,6 @@ const User = () => {
   const {user} = useOutletContext();
 
   
-
-
   return(
   <>
     {logged ? (
@@ -23,7 +21,7 @@ const User = () => {
       <NavigationLogged layout={logged} />
       
         <div className="header">
-          <h1 class="main-title">Welcome back<br />{user.firstName} {user.lastName}</h1>
+          <h1 className="main-title">Welcome back<br />{user.firstName} {user.lastName}</h1>
           <button className="edit-button">Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>

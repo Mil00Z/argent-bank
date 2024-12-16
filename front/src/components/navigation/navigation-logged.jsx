@@ -1,11 +1,13 @@
-import {Link} from 'react-router'
+import {Link, useOutletContext} from 'react-router'
 import logo from '@assets/logo-bank.png'
 
 const NavigationLogged = (props) => {
 
   const {layout} = props
 
-  return (
+  const {user} = useOutletContext();
+
+return (
     <nav className="main-nav">
     <Link className="main-nav-logo" to="/" aria-label="lien vers la page d'accueil">
       <img
@@ -15,18 +17,17 @@ const NavigationLogged = (props) => {
       />
       <h1 className="sr-only">Argent Bank</h1>
     </Link>
-    <div>
-      <a className="main-nav-item" href="./user.html">
+      <div>
+      <Link className="main-nav-item" to="/user" data-user={`${user.lastName}-${user.firstName}`}>
         <i className="fa fa-user-circle"></i>
-        Tony
-      </a>
-      <a className="main-nav-item" href="./index.html">
+        {user.firstName}
+      </Link>
+      <Link className="main-nav-item" to="/">
         <i className="fa fa-sign-out"></i>
         Sign Out
-      </a>
-    </div>
-  </nav>
+      </Link>
+      </div>
+    </nav>
 )
-
 }
 export default NavigationLogged
