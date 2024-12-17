@@ -1,4 +1,9 @@
-.signin{}
+.signin{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
 .sign-in-button {
   display: block;
@@ -13,12 +18,20 @@
 }
 
 .sign-in-content {
+  --sizes:450px;
+  width: var(--sizes);
   box-sizing: border-box;
-  background-color: white;
-  width: 300px;
-  margin: 0 auto;
-  margin-top: 3rem;
-  padding: 2rem;
+  background-color: var(--white-color);
+  border-radius: 10px;;
+  
+  // margin: 0 auto;
+  // margin-top: 3rem;
+  padding: var(--reg-spacing);
+  transition: var(--reg-transi);
+
+  &:hover{
+    --sizes:600px;
+  }
 }
 
 .sign-in-icon {
