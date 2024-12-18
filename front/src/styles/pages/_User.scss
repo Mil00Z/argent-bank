@@ -79,6 +79,29 @@
   color: #fff;
 }
 
+//user Error Profile
+
+.user-error-container{
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  width: 80%;
+  margin: 20dvh auto;
+  flex-direction: column;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  text-align: left;
+  margin-bottom: 2rem;
+
+  p {
+    font-size: 2rem;
+    color:var(--debeug-color);
+  }
+
+}
+
 @media (min-width: 720px) {
   .account {
     flex-direction: row;
