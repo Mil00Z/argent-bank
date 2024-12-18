@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {Link,useOutletContext} from 'react-router';
+import {useOutletContext, useNavigate} from 'react-router';
 
 
 const FormSignin = () => {
@@ -8,8 +8,11 @@ const FormSignin = () => {
 
   const [inputUserEmail,setInputUserEmail] = useState('');
   const [inputUserPass,setInputUserPass] = useState();
+
   
   const [error, setError] = useState(null)
+
+  const navigate = useNavigate();
   
 
   const triggerForm = (e) => {
@@ -26,8 +29,8 @@ const FormSignin = () => {
     login('http://localhost:3001/api/v1/user/login',datas);
 
   
-     //Get local values in inputs
-     stockDataInputs(datas);
+    //Get local values in inputs
+    stockDataInputs(datas);
 
     
   };
@@ -66,6 +69,7 @@ const FormSignin = () => {
 
     // Stock Credits in LocalStorage
     localStorage.setItem(`user-${user.firstName}`, JSON.stringify(datas));
+    // localStorage.setItem(`user-token`, JSON.stringify(datas?.body.token));
 
   }
 
@@ -77,11 +81,11 @@ const FormSignin = () => {
 
   }
 
-  async function login(url,settings) {
+  async function login(url,payload) {
 
     let params = {
-      method:"post",
-      body: JSON.stringify(settings),
+      method:"POST",
+      body: JSON.stringify(payload),
       headers : {
         "Content-Type":"application/json"
       }
@@ -92,7 +96,7 @@ const FormSignin = () => {
       const response = await fetch(url,params);
       const datas = await response.json();
 
-      console.log(datas)
+      // console.log(datas);
 
         if (datas.status === 400) {
 
@@ -100,7 +104,11 @@ const FormSignin = () => {
 
         } else {
 
-          return datas
+          setError(null);
+
+          localStorage.setItem(`user-token`, JSON.stringify(datas.body.token));
+
+          navigate("/user/");
 
         }
 
