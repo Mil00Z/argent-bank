@@ -3,6 +3,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .error{
+    font-size:1.2rem;
+    padding:var(--reg-spacing);
+    color:var(--debeug-color);
+  }
+
+  .success{
+    font-size:1.2rem;
+    padding:var(--reg-spacing);
+    color:var(--primary-color);
+  }
 }
 
 .sign-in-button {

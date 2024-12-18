@@ -7,10 +7,11 @@ const FormSignin = () => {
   const {user} = useOutletContext();
 
   const [inputUserEmail,setInputUserEmail] = useState('');
-  const [inputUserPass,setInputUserPass] = useState('');
+  const [inputUserPass,setInputUserPass] = useState();
   
-  // const [userLogin, setUserLogin] = useState({})
+  const [error, setError] = useState(null)
   
+
   const triggerForm = (e) => {
 
     //Not refresh
@@ -24,11 +25,11 @@ const FormSignin = () => {
     //Ask to API if the access is OK
     login('http://localhost:3001/api/v1/user/login',datas);
 
-
+  
      //Get local values in inputs
-     stockDataInputs('#signin',datas);
+     stockDataInputs(datas);
 
-
+    
   };
 
 
@@ -57,7 +58,7 @@ const FormSignin = () => {
 }
 
 
-  function stockDataInputs(target,datas) {
+  function stockDataInputs(datas) {
 
     // let form = document.querySelector(`${target}`);
 
@@ -91,15 +92,25 @@ const FormSignin = () => {
       const response = await fetch(url,params);
       const datas = await response.json();
 
-      console.log(datas);
+      console.log(datas)
 
-      return datas
+        if (datas.status === 400) {
 
-  } catch (error) {
+          setError(datas.message);
 
-      console.warn(error);
+        } else {
 
-    }
+          return datas
+
+        }
+
+    } catch (error) {
+
+        console.warn(error);
+
+        alert('No datas Fetched')
+
+      }
     
   }
 
@@ -120,6 +131,10 @@ const FormSignin = () => {
             <label htmlFor="remember-me">Remember me</label>
       </div>
       <button className="sign-in-button">Sign In</button>
+
+
+      {error ? (<p className="error">{error}</p>) : null }
+
     </form>
   )
 }
