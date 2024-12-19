@@ -68,7 +68,7 @@ const FormSignin = () => {
     // let formDatas = new FormData(form);
 
     // Stock Credits in LocalStorage
-    localStorage.setItem(`user-${user.firstName}`, JSON.stringify(datas));
+    localStorage.setItem(`user-machin`, JSON.stringify(datas));
     
   }
 
