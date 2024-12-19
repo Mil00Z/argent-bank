@@ -69,8 +69,7 @@ const FormSignin = () => {
 
     // Stock Credits in LocalStorage
     localStorage.setItem(`user-${user.firstName}`, JSON.stringify(datas));
-    // localStorage.setItem(`user-token`, JSON.stringify(datas?.body.token));
-
+    
   }
 
   function checkUserStorage() {
@@ -113,11 +112,12 @@ const FormSignin = () => {
         }
 
     } catch (error) {
+      
+        setError('Error API Call : No datas Fetched');
 
         console.warn(error);
 
-        alert('No datas Fetched')
-
+      
       }
     
   }
@@ -126,13 +126,14 @@ const FormSignin = () => {
 
   return(
     <form id="signin" onSubmit={triggerForm}>
+
       <div className="input-wrapper">
             <label htmlFor="email">Username</label>
-            <input type="email" id="email" name="email" onChange={(e) => getUserEmail(e.target.value)} />
+            <input type="email" placeholder="Votre identifiant" id="email" name="email" onChange={(e) => getUserEmail(e.target.value)} />
       </div>
       <div className="input-wrapper">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password"  onChange={(e) =>getUserPass(e.target.value)} />
+            <input type="password" id="password" name="password" placeholder="*********"  onChange={(e) =>getUserPass(e.target.value)} />
       </div>
       <div className="input-remember">
             <input type="checkbox" id="remember-me" />

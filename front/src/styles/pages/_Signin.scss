@@ -5,14 +5,19 @@
   align-items: center;
 
   .error{
-    font-size:1.2rem;
     padding:var(--reg-spacing);
-    color:var(--debeug-color);
+    font : {
+      size:1.2rem;
+      weight:bold;
+    }
+    text-align: center;
+    color:var(--white-color);
+    background:crimson
   }
 
   .success{
-    font-size:1.2rem;
     padding:var(--reg-spacing);
+    font-size:1.2rem;
     color:var(--primary-color);
   }
 }
