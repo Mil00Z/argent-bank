@@ -25,9 +25,9 @@ function Root () {
 
   return (
     <>
-      <Navigation layout={'connect'} />
+      <Navigation user={{}} />
         <main className={`main ${route?.pageClasses || 'bg-dark'}`}>
-          <Outlet context={{user}} />
+          <Outlet context={user} />
         </main>
       <Footer />
     </>

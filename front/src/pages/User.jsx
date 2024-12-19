@@ -1,6 +1,6 @@
 import { useState,useEffect} from 'react'
 
-import NavigationLogged from '@components/navigation/navigation-logged'
+
 import UserError from '@components/errors/userError'
 
 
@@ -13,6 +13,8 @@ const User = () => {
   const [loged,isLoged] = useState(false);
   
   const [user,setUser] = useState({});
+
+
 
   //Check Datas User Profile
   async function checkUser(url,token){
@@ -61,14 +63,15 @@ const User = () => {
   }, []);
 
 
+  // console.log(new Date(user.updatedAt));
+
+
  
   return(
 
   <>
     {loged ? (
       <>
-      <NavigationLogged layout={loged} />
-      
         <div className="header">
           <h1 className="main-title">Welcome back<br />{user.firstName} {user.lastName}</h1>
           <button className="edit-button">Edit Name</button>
@@ -107,9 +110,7 @@ const User = () => {
     </>
     ) : (
     <>
-     
       <UserError />
-     
     </>
     )
   }
