@@ -107,7 +107,7 @@ const FormSignin = () => {
 
           localStorage.setItem(`user-token`, JSON.stringify(datas.body.token));
 
-          navigate("/user/");
+          navigate("/profile");
 
         }
 

@@ -25,12 +25,12 @@ import '@styles/main.scss'
         pageClasses :'home'
       },
       {
-        path: '/signin',
+        path: '/login',
         element: <SignIn />,
         pageClasses :'signin bg-dark'
       },
       {
-        path: '/user',
+        path: '/profile',
         element: <User />,
         pageClasses :'user'
       },
