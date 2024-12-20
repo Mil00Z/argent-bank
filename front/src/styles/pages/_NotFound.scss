@@ -1,0 +1,25 @@
+.not-found-container{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  padding: 1.5rem;
+  background-color: #fff;
+  
+  .title {
+    font-size:15rem;
+    margin-block:1rem;
+  }
+  .description {
+    font-size:2rem;
+    margin-block:1rem;
+  }
+  
+  .link {
+    color:var(--primary-color);
+  }
+  
+}
