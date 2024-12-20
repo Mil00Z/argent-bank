@@ -1,6 +1,6 @@
 
-
 import FormSignin from '@components/form/form';
+
 import '@styles/pages/_Signin.scss';
 
 const SignIn = () => {

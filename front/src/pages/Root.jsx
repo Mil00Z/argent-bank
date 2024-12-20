@@ -23,6 +23,7 @@ function Root () {
   };
 
 
+
   return (
     <>
       <Navigation user={{}} />
@@ -33,6 +34,7 @@ function Root () {
     </>
   )
 }
+
 
 Outlet.propTypes = {
   context: PropTypes.shape({
