@@ -1,35 +1,39 @@
 import { useState, useEffect } from 'react'
-import {Link} from 'react-router'
+import {Link,useNavigate} from 'react-router'
 import logo from '@assets/logo-bank.png'
 
 import '@styles/layout/_navigation.scss'
 
 const Navigation = (props) => {
+  
 
   const {layout = 'default', user} = props;
 
   const [isLogin,setIsLogin] = useState(false);
 
 
+  let token = localStorage.getItem(`user-token`);
+
 
   useEffect(() => {  
 
-    // let token = localStorage.getItem(`user-token`);
+    if (token) {
+      
+      console.log('alloooooou');
 
-    if (localStorage.getItem(`user-token`)) {
-
-      setIsLogin(true)
+      setIsLogin(isLogin => true)
 
     }  
 
-  },[]);
+  },[token]);
 
 
   const handleLogout = () => {
 
-    localStorage.removeItem(`user-token`);
+    // localStorage.removeItem(`user-token`);
+    localStorage.clear();
     setIsLogin(false); 
-  
+
 }
 
 
@@ -48,7 +52,7 @@ const Navigation = (props) => {
           <h1 className="sr-only">Argent Bank</h1>
         </Link>
         <div>
-          <Link className="main-nav-item" to="/signin">
+          <Link className="main-nav-item" to="/login">
             <i className="fa fa-user-circle"></i>
             Sign In
           </Link>
