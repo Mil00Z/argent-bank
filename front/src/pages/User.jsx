@@ -1,4 +1,5 @@
 import { useState,useEffect} from 'react'
+import {useNavigate} from 'react-router'
 
 
 import UserError from '@components/errors/userError'
@@ -11,8 +12,12 @@ import '@styles/pages/_User.scss'
 const User = () => {
 
   const [loged,isLoged] = useState(false);
+
+  const [loading,setLoading] = useState(true);
   
   const [user,setUser] = useState({});
+
+  const navigate = useNavigate();
 
 
 
@@ -54,11 +59,25 @@ const User = () => {
    
   useEffect(() => {
 
-    if(localStorage.getItem('user-token') !== null){
-       
-      checkUser('http://localhost:3001/api/v1/user/profile',localStorage.getItem('user-token'));
+    async function checkUserStorage(){
+
+
+      if(!localStorage.getItem('user-token')){
+  
+        navigate('/login');
+         
+      } else {
+  
+        await checkUser('http://localhost:3001/api/v1/user/profile',localStorage.getItem('user-token'));
+
+        setLoading(false);
+  
+      }
 
     }
+
+    checkUserStorage()
+    
 
   }, []);
 
@@ -66,11 +85,11 @@ const User = () => {
   // console.log(new Date(user.updatedAt));
 
 
+if(loading) return <h2>Loading...</h2>
  
-  return(
+if(!loged) return <UserError />;
 
-  <>
-    {loged ? (
+  return(
       <>
         <div className="header">
           <h1 className="main-title">Welcome back<br />{user.firstName} {user.lastName}</h1>
@@ -108,14 +127,7 @@ const User = () => {
           </div>
         </section>
     </>
-    ) : (
-    <>
-      <UserError />
-    </>
-    )
-  }
-</> 
-    
+      
   )
 }
 export default User
