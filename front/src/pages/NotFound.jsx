@@ -1,9 +1,12 @@
 import {Link} from 'react-router'
 
+
+
 import '@styles/pages/_NotFound.scss'
 
 const NotFound = () => {
 
+ 
   return (  
 
     <section className="not-found-container">
