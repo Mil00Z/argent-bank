@@ -1,15 +1,10 @@
-// Need to use the React-specific entry point to import `createApi`
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 
-// Define a service using a base URL and expected endpoints
 export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3001/api/v1' }),
   endpoints: (builder) => ({
-     // Supply generics for the return type (in this case `QuotesApiResponse`)
-//     // and the expected query argument. If there is no argument, use `void`
-//     // for the argument type instead.
     login: builder.mutation({
       query: (credentials) => ({
         url: '/user/login',

@@ -1,27 +1,26 @@
-import { combineSlices, configureStore } from "@reduxjs/toolkit"
+import { combineReducers, configureStore } from "@reduxjs/toolkit"
+import {thunk} from 'redux-thunk'
+
 // import { setupListeners } from "@reduxjs/toolkit/query"
 
 import { authSlice } from "./auth/slice"
 import { authApi } from "./auth/api"
 
-import { userSlice } from "./user/slice"
-import { userApi } from "./user/api"
+// import { userSlice } from "./user/slice"
+// import { userApi } from "./user/api"
 
 
-// `combineSlices` automatically combines the reducers using
-// their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-// const rootReducer = combineSlices(counterSlice, quotesApiSlice)
+let state = {};
 
 export const store = configureStore({
-  // reducer: combineSlices(authSlice, userSlice),
-  reducer: combineSlices(),
-  // Adding the api middleware enables caching, invalidation, polling,
-  // and other useful features of `rtk-query`.
-  // middleware: getDefaultMiddleware => {
-  //   return getDefaultMiddleware().concat(authApi.middleware,userApi.middleware)
-  // }
+  preloadState: state,
+  reducer : combineReducers({
+    auth: authSlice.reducer,
+    [authApi.reducerPath]: authApi.reducer,
+    // [userApi.reducerPath]: userApi.reducer
+  }),
   middleware: getDefaultMiddleware => {
-    return getDefaultMiddleware().concat(authApi.middleware)
+    return getDefaultMiddleware().concat(authApi.middleware).concat(thunk)
   }
 
 })
