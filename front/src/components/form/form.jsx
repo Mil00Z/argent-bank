@@ -41,9 +41,14 @@ const FormSignin = () => {
     //Ask to API if the access is OK
     const response = await login(datas).unwrap();
 
+    console.log(response);
+
     if(response){
 
       dispatch(authSlice.actions.setUser(datas));
+      
+      dispatch(authSlice.actions.setToken(response.body.token));
+
 
       //Get local values in inputs
       stockDataInputs(datas);
