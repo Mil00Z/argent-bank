@@ -11,6 +11,8 @@ const Navigation = (props) => {
 
   const [isLogin, setIsLogin] = useState(false);
 
+  const navigate = useNavigate();
+
 
   let token = localStorage.getItem(`user-token`);
 
@@ -33,6 +35,8 @@ const Navigation = (props) => {
     localStorage.clear();
     
     setIsLogin(false);
+
+    navigate('/')
 
   }
 
@@ -63,10 +67,10 @@ const Navigation = (props) => {
                     <i className="fa fa-user-circle"></i>
                     {user.firstName}
                 </Link>
-                <Link className="main-nav-item" to="/" onClick={handleLogout}>
+                <button className="main-nav-item" onClick={handleLogout}>
                     <i className="fa fa-sign-out"></i>
                     Sign Out
-                </Link>
+                </button>
               </>)
             }
           </div>
