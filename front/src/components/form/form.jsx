@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {useOutletContext, useNavigate} from 'react-router';
+import { useLoginMutation } from "@root/redux/auth/api";
 
 
 const FormSignin = () => {
@@ -13,9 +14,15 @@ const FormSignin = () => {
   const [error, setError] = useState(null)
 
   const navigate = useNavigate();
+
+
+  // RTK Query API
+  const [login, { data, error: loginError, isLoading }] = useLoginMutation();
+
+  
   
 
-  const triggerForm = (e) => {
+  const triggerForm = async (e) => {
 
     //Not refresh
     e.preventDefault();
@@ -26,7 +33,12 @@ const FormSignin = () => {
     }
 
     //Ask to API if the access is OK
-    login('http://localhost:3001/api/v1/user/login',datas);
+    const response = await login(datas).unwrap();
+
+    console.log('RTK response',response);
+
+
+    // login('http://localhost:3001/api/v1/user/login',datas);
 
   
     //Get local values in inputs
@@ -80,47 +92,47 @@ const FormSignin = () => {
 
   }
 
-  async function login(url,payload) {
+  // async function login(url,payload) {
 
-    let params = {
-      method:"POST",
-      body: JSON.stringify(payload),
-      headers : {
-        "Content-Type":"application/json"
-      }
-    }
+  //   let params = {
+  //     method:"POST",
+  //     body: JSON.stringify(payload),
+  //     headers : {
+  //       "Content-Type":"application/json"
+  //     }
+  //   }
 
-    try {
+  //   try {
 
-      const response = await fetch(url,params);
-      const datas = await response.json();
+  //     const response = await fetch(url,params);
+  //     const datas = await response.json();
 
-      // console.log(datas);
+  //     // console.log(datas);
 
-        if (datas.status === 400) {
+  //       if (datas.status === 400) {
 
-          setError(datas.message);
+  //         setError(datas.message);
 
-        } else {
+  //       } else {
 
-          setError(null);
+  //         setError(null);
 
-          localStorage.setItem(`user-token`, JSON.stringify(datas.body.token));
+  //         localStorage.setItem(`user-token`, JSON.stringify(datas.body.token));
 
-          navigate("/profile");
+  //         navigate("/profile");
 
-        }
+  //       }
 
-    } catch (error) {
+  //   } catch (error) {
       
-        setError('Error API Call : No datas Fetched');
+  //       setError('Error API Call : No datas Fetched');
 
-        console.warn(error);
+  //       console.warn(error);
 
       
-      }
+  //     }
     
-  }
+  // }
 
  
 
