@@ -1,50 +1,57 @@
 import { useState } from "react";
-import {useOutletContext, useNavigate} from 'react-router';
+import {useNavigate} from 'react-router';
+
+import {useDispatch} from 'react-redux';
+import {authSlice} from "../../redux/auth/slice";
+
 import { useLoginMutation } from "@root/redux/auth/api";
+
+
+import UserError from '@components/errors/userError'
 
 
 const FormSignin = () => {
 
-  const {user} = useOutletContext();
 
   const [inputUserEmail,setInputUserEmail] = useState('');
   const [inputUserPass,setInputUserPass] = useState();
 
   
-  const [error, setError] = useState(null)
-
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
 
   // RTK Query API
-  const [login, { data, error: loginError, isLoading }] = useLoginMutation();
+  const [login, { data, error, isLoading }] = useLoginMutation();
 
   
-  
-
   const triggerForm = async (e) => {
 
     //Not refresh
     e.preventDefault();
+
 
     let datas = {
       email: inputUserEmail,
       password: inputUserPass
     }
 
+   
     //Ask to API if the access is OK
     const response = await login(datas).unwrap();
 
-    console.log('RTK response',response);
+    if(response){
 
+      dispatch(authSlice.actions.setUser(datas));
 
-    // login('http://localhost:3001/api/v1/user/login',datas);
+      //Get local values in inputs
+      stockDataInputs(datas);
 
-  
-    //Get local values in inputs
-    stockDataInputs(datas);
+      navigate('/user');
 
-    
+    }
+
   };
 
 
@@ -75,22 +82,13 @@ const FormSignin = () => {
 
   function stockDataInputs(datas) {
 
-    // let form = document.querySelector(`${target}`);
-
-    // let formDatas = new FormData(form);
+    let localUser = inputUserEmail.substring(0, inputUserEmail.indexOf("@"));
 
     // Stock Credits in LocalStorage
-    localStorage.setItem(`user-machin`, JSON.stringify(datas));
+    localStorage.setItem(`user-${localUser}`, JSON.stringify(datas));
     
   }
 
-  function checkUserStorage() {
-
-    let checkUser = JSON.parse(localStorage.getItem(`user-${inputUsername}`)) || false;
-
-      return checkUser
-
-  }
 
   // async function login(url,payload) {
 
@@ -154,7 +152,7 @@ const FormSignin = () => {
       <button className="sign-in-button">Sign In</button>
 
 
-      {error ? (<p className="error">{error}</p>) : null }
+      {error ? (<UserError errorFlow={error.data.message} layout={'login'} />) : null }
 
     </form>
   )
