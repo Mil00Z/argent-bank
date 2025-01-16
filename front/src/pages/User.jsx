@@ -59,6 +59,7 @@ const User = () => {
    
   useEffect(() => {
 
+    //Limiter la portée + Syntaxe standard avec useEffect (car async n'est pas possible sur UseEffect)
     async function checkUserStorage(){
 
 
