@@ -16,7 +16,6 @@ const FormSignin = () => {
   const [inputUserEmail,setInputUserEmail] = useState('');
   const [inputUserPass,setInputUserPass] = useState();
 
-  
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -43,9 +42,7 @@ const FormSignin = () => {
 
     console.log(response);
 
-    if(response){
-
-      dispatch(authSlice.actions.setUser(datas));
+    if(response) {
       
       dispatch(authSlice.actions.setToken(response.body.token));
 
@@ -53,7 +50,7 @@ const FormSignin = () => {
       //Get local values in inputs
       stockDataInputs(datas);
 
-      navigate('/user');
+      navigate('/profile');
 
     }
 
@@ -80,7 +77,10 @@ const FormSignin = () => {
 
       setInputUserPass(value);
 
-    } 
+    } else {
+
+      //  return (<UserError>{value}</UserError>)
+    }
 
 }
 

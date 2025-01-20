@@ -6,8 +6,8 @@ import {thunk} from 'redux-thunk'
 import { authSlice } from "./auth/slice"
 import { authApi } from "./auth/api"
 
-// import { userSlice } from "./user/slice"
-// import { userApi } from "./user/api"
+import { userSlice } from "./user/slice"
+import { userApi } from "./user/api"
 
 
 let state = {};
@@ -16,6 +16,7 @@ export const store = configureStore({
   preloadState: state,
   reducer : combineReducers({
     auth: authSlice.reducer,
+    user : userSlice.reducer,
     [authApi.reducerPath]: authApi.reducer,
     // [userApi.reducerPath]: userApi.reducer
   }),

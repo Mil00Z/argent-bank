@@ -1,22 +1,21 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+import {createSlice} from '@reduxjs/toolkit'
+
+
+const initialiasedState = {token:null}
 
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    user: [],
-  },
+  initialState:initialiasedState,
   reducers : {
-    setUser: (state,action) => {
-       return {...state,user:action.payload}
-    },
     setToken : (state,action) => {
       return {...state,token:action.payload}
-    }
+    },
+    reset : () => initialiasedState
   }
 })
 
 
-// export const authThunk = createAsyncThunk('auth/authThunk',async (payload) => {
 
-   
-// })
+// setUser pas nécessaire (intialeState user en object et pas tableaux)
+
+//dispatch(reset)
