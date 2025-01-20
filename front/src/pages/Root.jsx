@@ -15,20 +15,12 @@ function Root () {
 
   // console.log(route.pageClasses);
 
-  let user =   {
-    firstName: 'Tony',
-    lastName: 'Stark',
-    email: 'tony@stark.com',
-    password: 'password123'
-  };
-
-
-
+  
   return (
     <>
-      <Navigation user={{}} />
+      <Navigation />
         <main className={`main ${route?.pageClasses || 'bg-dark'}`}>
-          <Outlet context={user} />
+          <Outlet context={'im g-root'} />
         </main>
       <Footer />
     </>
@@ -36,10 +28,14 @@ function Root () {
 }
 
 
+// Outlet.propTypes = {
+//   context: PropTypes.shape({
+//     user: PropTypes.object.isRequired
+//   }).isRequired
+// }
+
 Outlet.propTypes = {
-  context: PropTypes.shape({
-    user: PropTypes.object.isRequired
-  }).isRequired
+  context:PropTypes.string  
 }
 
 export default Root
