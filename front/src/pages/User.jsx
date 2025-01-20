@@ -1,6 +1,11 @@
 import { useState,useEffect} from 'react'
 import {useNavigate} from 'react-router'
 
+import { useSelector,useDispatch} from 'react-redux';
+
+
+import { userSlice } from '../redux/user/slice';
+import { useGetUserMutation } from '../redux/user/api';
 
 import UserError from '@components/errors/userError'
 
@@ -9,19 +14,61 @@ import '@styles/pages/_User.scss'
 
 
 
+
 const User = () => {
 
-  const [loged,isLoged] = useState(false);
+  const [loged,setLoged] = useState(false);
 
-  const [loading,setLoading] = useState(true);
-  
-  const [user,setUser] = useState({});
+  const token = useSelector(state => state.auth?.token);
+
+  const user = useSelector(state => state.user?.userCredits)
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
+  // Hook from RTK Mutation
+  const [getUser,{data,error,isLoading}] = useGetUserMutation();
+
+  
+  useEffect(() => {
+
+    // console.log('recorded token',token);
+
+    if(token){
+
+      checkUser('http://localhost:3001/api/v1/user/profile',token);
+    } else {
+      navigate('/login');
+    }
+
+    // getUserProfile()
+
+  },[])
 
 
-  //Check Datas User Profile
+
+ // RTK query
+ async function getUserProfile(){
+
+  try{
+
+    //Ask to API if the access is OK
+    const response = await getUser().unwrap();
+
+      console.log(response);
+ 
+    return response
+
+  } catch(error) {
+
+    console.warn(error);
+  }
+
+}
+
+  
+  // Fetch Standard Query
   async function checkUser(url,token){
 
     try {
@@ -30,63 +77,63 @@ const User = () => {
           method:"POST",
           headers : {
             "Content-Type":"application/json",
-            "Authorization": `Bearer ${JSON.parse(token)}`
+            "Authorization": `Bearer ${token}`
           }
         });
 
         let datas = await response.json();
 
-        console.log(datas);
-
         if (datas.status === 200) {
 
-          // console.log(datas.body);
+          dispatch(userSlice.actions.setUser(datas.body));
 
-          isLoged(true);
-          
-          setUser((user) => datas.body);
+          setLoged(true);
 
-        }
+          console.log(datas.body)
+
+          console.table(user)
+        } 
             
     } catch(error) {
       
         console.warn(error);
     }
 
-
+  
   }
 
+
+
    
-  useEffect(() => {
+  // useEffect(() => {
 
-    //Limiter la portée + Syntaxe standard avec useEffect (car async n'est pas possible sur UseEffect)
-    async function checkUserStorage(){
+  //   //Limiter la portée + Syntaxe standard avec useEffect (car async n'est pas possible sur UseEffect)
+  //   async function checkUserStorage(){
 
 
-      if(!localStorage.getItem('user-token')){
+  //     if(localStorage.getItem('user-token')){
   
-        navigate('/login');
+  //       navigate('/login');
          
-      } else {
+  //     } else {
   
-        await checkUser('http://localhost:3001/api/v1/user/profile',localStorage.getItem('user-token'));
+  //       await checkUser('http://localhost:3001/api/v1/user/profile',token);
 
-        setLoading(false);
+  //       setLoading(false);
   
-      }
+  //     }
 
-    }
+  //   }
 
-    checkUserStorage()
+  //   checkUserStorage()
     
 
-  }, []);
+  // }, []);
 
 
-  // console.log(new Date(user.updatedAt));
-
-
-if(loading) return <h2>Loading...</h2>
+if(isLoading) return <h2>Loading...
+  <p>{ token ? token : 'No Token'}</p> 
+</h2>
  
 if(!loged) return <UserError />;
 
@@ -94,7 +141,7 @@ if(!loged) return <UserError />;
       <>
         <div className="header">
           <h1 className="main-title">Welcome back<br />{user.firstName} {user.lastName}</h1>
-          <button className="edit-button">Edit Name</button>
+          <button className="edit-button" onClick={alert('Edit Name')}>Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
         <section className="account" data-user={user.id}>
