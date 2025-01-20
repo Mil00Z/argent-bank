@@ -1,8 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import {thunk} from 'redux-thunk'
 
-// import { setupListeners } from "@reduxjs/toolkit/query"
-
 import { authSlice } from "./auth/slice"
 import { authApi } from "./auth/api"
 
@@ -18,10 +16,10 @@ export const store = configureStore({
     auth: authSlice.reducer,
     user : userSlice.reducer,
     [authApi.reducerPath]: authApi.reducer,
-    // [userApi.reducerPath]: userApi.reducer
+    [userApi.reducerPath]: userApi.reducer
   }),
   middleware: getDefaultMiddleware => {
-    return getDefaultMiddleware().concat(authApi.middleware).concat(thunk)
+    return getDefaultMiddleware().concat(authApi.middleware).concat(userApi.middleware).concat(thunk)
   }
 
 })
