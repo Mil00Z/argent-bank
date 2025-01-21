@@ -21,6 +21,13 @@ const Navigation = () => {
 
   const user = useSelector(state => state.user?.userCredits);
 
+  const lastUpdated = useSelector(state => state.user?.userCredits?.updatedAt);
+
+
+  let formatedDate = new Date(lastUpdated).toLocaleDateString('fr-FR');
+
+  console.log(lastUpdated,formatedDate);
+
 
   const [isLoged, setIsLoged] = useState(false);
 
@@ -61,17 +68,17 @@ const Navigation = () => {
 
   return (
 
-      <>
-        <nav className="main-nav">
-          <Link className="main-nav-logo" to="/" aria-label="lien vers la page d'accueil">
+    <>
+      <nav className="main-nav">
+        <Link className="main-nav-logo" to="/" aria-label="lien vers la page d'accueil">
             <img
               className="main-nav-logo-image"
               src={logo}
               alt="Argent Bank Logo"
             />
             <h1 className="sr-only">Argent Bank</h1>
-          </Link>
-          <div>
+        </Link>
+        <div>
 
           {!isLoged ?
 
@@ -80,9 +87,10 @@ const Navigation = () => {
                 Sign In
               </Link>) : 
             (<>
-              <Link className="main-nav-item" to="/user" data-user={`${user?.lastName}-${user?.firstName}`}>
+              <Link className="main-nav-item" to="/profile" data-user={`${user?.lastName}-${user?.firstName}`}>
                     <i className="fa fa-user-circle"></i>
                     {user?.firstName}
+                    <span className="another-datas"> dernier update : {formatedDate}</span>
               </Link>
               <button className="main-nav-item" onClick={handleLogout}>
                     <i className="fa fa-sign-out"></i>
@@ -91,8 +99,8 @@ const Navigation = () => {
             </>)
             }
           </div>
-        </nav>
-      </>
-    )
+      </nav>
+    </>
+  )
 }
 export default Navigation
