@@ -1,4 +1,4 @@
-import {createApi,fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 import { useSelector } from 'react-redux';
 
@@ -6,11 +6,29 @@ import { useSelector } from 'react-redux';
 
 export const userApi = createApi({
   reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({ 
-    baseUrl: 'http://localhost:3001/api/v1' },
-    
-    ),
-  prepareHeaders: (headers, { getState }) => {
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'http://localhost:3001/api/v1',
+    prepareHeaders: (headers, { getState }) => {
+      //Type de contenu
+      headers.set('Accept', 'application/json');
+      headers.set('Access-Control-Allow-Headers', 'Accept');
+
+
+      // Récupérer le token depuis le store Redux
+      const token = getState().auth?.token;
+
+      if (token) {
+
+        headers.set('Authorization', `Bearer ${token}`);
+
+      }
+
+      console.log(headers)
+      return headers;
+    }
+  },
+  ),
+  /*prepareHeaders: (headers, { getState }) => {
     //Type de contenu
     headers.set('Accept', 'application/json');
     headers.set('Access-Control-Allow-Headers','Accept');
@@ -24,13 +42,12 @@ export const userApi = createApi({
       headers.set('Authorization', `Bearer ${token}`);
 
     }
-
     console.log(headers)
     return headers;
-  },
+  },*/
   endpoints: (builder) => ({
-    getUser : builder.mutation({
-      query : () => ({
+    getUser: builder.mutation({
+      query: () => ({
         url: '/user/profile',
         method: 'POST',
       })
