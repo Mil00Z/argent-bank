@@ -10,6 +10,9 @@ export const userSlice = createSlice({
     setUser : (state,action) => {
       return {...state,userCredits:action.payload}
     },
+    updateUser : (state,action) => {
+      return {...state,userUpdates:action.payload}
+    },
     reset : () => initialiasedState
   }
 })
