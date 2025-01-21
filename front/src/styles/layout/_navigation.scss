@@ -17,9 +17,32 @@
   &-item {
     text-decoration: none;
     margin-right: 0.5rem;
+    position: relative;
 
     &:hover{
       text-decoration: underline;
+
+      .another-datas{
+        --op:1;
+      }
+
+      i {
+        color:var(--primary-color);
+      }
+    }
+
+    .another-datas {
+      --sizes:200px;
+      --op:0;
+      position: absolute;
+      top: 200%;
+      right: 0%;
+      width: var(--sizes);
+      background-color: var(--white-color);
+      padding:.5rem;
+      border-radius: 0 0 10px 10px;
+      opacity: var(--op);
+      transition: var(--reg-transi);
     }
 
     > i {
