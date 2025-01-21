@@ -10,6 +10,7 @@ export const userSlice = createSlice({
     setUser : (state,action) => {
       return {...state,userCredits:action.payload}
     },
+    reset : () => initialiasedState
   }
 })
 

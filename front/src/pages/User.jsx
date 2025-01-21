@@ -38,6 +38,7 @@ const User = () => {
     if(token){
 
       checkUser('http://localhost:3001/api/v1/user/profile',token);
+
     } else {
       navigate('/login');
     }
@@ -85,13 +86,14 @@ const User = () => {
 
         if (datas.status === 200) {
 
+
           dispatch(userSlice.actions.setUser(datas.body));
 
           setLoged(true);
 
-          console.log(datas.body)
+          // console.log(datas.body)
 
-          console.table(user)
+          // console.table(user)
         } 
             
     } catch(error) {
@@ -131,6 +133,7 @@ const User = () => {
   // }, []);
 
 
+
 if(isLoading) return <h2>Loading...
   <p>{ token ? token : 'No Token'}</p> 
 </h2>
@@ -141,7 +144,7 @@ if(!loged) return <UserError />;
       <>
         <div className="header">
           <h1 className="main-title">Welcome back<br />{user.firstName} {user.lastName}</h1>
-          <button className="edit-button" onClick={alert('Edit Name')}>Edit Name</button>
+          <button className="edit-button" onClick={() => {console.log('Edit Name')}}>Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
         <section className="account" data-user={user.id}>

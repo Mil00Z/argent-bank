@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router'
 import { useStore,useSelector } from 'react-redux'
 
 import { authSlice } from '../../redux/auth/slice'
+import { userSlice } from '../../redux/user/slice'
 
 //Assets
 import logo from '@assets/logo-bank.png'
@@ -29,9 +30,7 @@ const Navigation = () => {
 
   useEffect(() => {
 
-    console.log(user)
-
-    console.log(store.getState());
+    // console.log(store.getState());
 
     if (token) {
 
@@ -48,6 +47,8 @@ const Navigation = () => {
 
 
     store.dispatch(authSlice.actions.reset());
+
+    store.dispatch(userSlice.actions.reset());
     
     setIsLoged(false);
 
@@ -79,9 +80,9 @@ const Navigation = () => {
                 Sign In
               </Link>) : 
             (<>
-              <Link className="main-nav-item" to="/user" data-user={`${user.lastName}-${user.firstName}`}>
+              <Link className="main-nav-item" to="/user" data-user={`${user?.lastName}-${user?.firstName}`}>
                     <i className="fa fa-user-circle"></i>
-                    {user.firstName}
+                    {user?.firstName}
               </Link>
               <button className="main-nav-item" onClick={handleLogout}>
                     <i className="fa fa-sign-out"></i>
