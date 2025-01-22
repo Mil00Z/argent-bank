@@ -26,8 +26,6 @@ const Navigation = () => {
 
   let formatedDate = new Date(lastUpdated).toLocaleDateString('fr-FR');
 
-  console.log(lastUpdated,formatedDate);
-
 
   const [isLoged, setIsLoged] = useState(false);
 
@@ -37,7 +35,6 @@ const Navigation = () => {
 
   useEffect(() => {
 
-    // console.log(store.getState());
 
     if (token) {
 
