@@ -44,13 +44,15 @@ const User = () => {
 
     if(token){
 
-      checkUser('http://localhost:3001/api/v1/user/profile',token);
+        getUserProfile()
+
+      // checkUser('http://localhost:3001/api/v1/user/profile',token);
 
     } else {
       navigate('/login');
     }
 
-    // getUserProfile()
+  
 
   },[])
 
@@ -64,9 +66,9 @@ const User = () => {
     //Ask to API if the access is OK
     const response = await getUser().unwrap();
 
-      console.log(response);
- 
-    return response
+    dispatch(userSlice.actions.setUser(response.body));
+
+    setLoged(true);
 
   } catch(error) {
 
@@ -93,14 +95,10 @@ const User = () => {
 
         if (datas.status === 200) {
 
-
           dispatch(userSlice.actions.setUser(datas.body));
 
           setLoged(true);
 
-          // console.log(datas.body)
-
-          // console.table(user)
         } 
             
     } catch(error) {
@@ -108,13 +106,11 @@ const User = () => {
         console.warn(error);
     }
 
-  
   }
 
 
   function triggerEditUser(){
 
-    
       setIsEdit(isEdit => true);
 
       setAnimate(animate => true);
@@ -124,9 +120,9 @@ const User = () => {
 
 //Scenarii
 
-if(isLoading) return <h2>Loading...
-  <p>{ token ? token : 'No Token'}</p> 
-</h2>
+// if(isLoading) return <h2>Loading...
+//   <p>{ token ? token : 'No Token'}</p> 
+// </h2>
  
 
 if(!loged) return <UserError />;
@@ -136,7 +132,7 @@ if(!loged) return <UserError />;
   return(
       <>
         <div className="header">
-          <h1 className="main-title">Welcome back<br />{user.firstName} {user.lastName}</h1>
+          <h1 className="main-title">Welcome back<br />{user?.firstName} {user?.lastName}</h1>
           <button className="edit-button" onClick={() => {triggerEditUser()}}>Edit Name</button>
         </div>
         
