@@ -1,5 +1,8 @@
-import {useEffect,useState} from 'react'
+import {useState} from 'react'
 import {useSelector,useDispatch} from 'react-redux'
+
+import { useGetUserMutation} from '../../redux/user/api'
+import { useUpdateUserMutation } from '../../redux/user/apiUpdate'
 
 import {userSlice} from '../../redux/user/slice'
 
@@ -18,33 +21,53 @@ const UserEdit = (props) => {
 
   const user = useSelector(state => state.user?.userCredits);
 
+  const token = useSelector(state => state.auth?.token);
+
+
+  // Hook from RTK Mutation
+  const [getUser,{data,error,isLoading}] = useGetUserMutation();
+
+  const [updateUser,{dataUpdateUser,errorUpdateUser,isLoadingUpdateUser}] = useUpdateUserMutation();
+
   const dispatch = useDispatch();
 
  
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
 
     e.preventDefault();
 
     //check si besoin de verif les inputs ?
-    // voir si on doit récupérer ça différement qu'en JS natif direct
+    // voir si on doit récupérer ça différement qu'en JS natif direct ?
 
     let name = document.querySelector('input[name="firstName"]').value;
 
     let lastname = document.querySelector('input[name="lastName"]').value;
 
-    const updateUser = {
+
+    const updatedDatasUser = {
       ...user,
       firstName:name,
       lastName:lastname
     }
 
-    dispatch(userSlice.actions.setUser(
-      updateUser))
+    //Update Store
+    dispatch(userSlice.actions.setUser(updatedDatasUser))
+   
+    //Update API
+    try{
 
+      const response = await updateUser({firstName:name,lastName:lastname}).unwrap();
+
+      console.log(response);
+
+    } catch(error){console.warn(error)}
+
+    
   } 
 
 
+  
 return (
   <>
     <section className={`user-edit-container ${fadeIn ? 'pop-in' : ''}`}>
