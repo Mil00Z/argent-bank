@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState,useEffect, use } from "react";
 import {useNavigate} from 'react-router';
 
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import {authSlice} from "../../redux/auth/slice";
 
 import { useLoginMutation } from "@root/redux/auth/api";
@@ -17,6 +17,10 @@ const FormSignin = () => {
   const [inputUserPass,setInputUserPass] = useState();
 
   const navigate = useNavigate();
+
+  const token = useSelector(state => state.auth?.token);
+
+  const userCredits = useSelector(state => state.user?.userCredits);
 
   const dispatch = useDispatch();
 
@@ -84,16 +88,44 @@ const FormSignin = () => {
 
 }
 
+  function handleAlreadyLogin(e) {
+    
+    let isChecked = e.target.checked;
+
+    if (!isChecked) {
+
+      localStorage.clear();
+
+    } else {
+
+      console.log(userCredits, localStorage);
+
+      stockDataInputs(userCredits);
+
+    }
+  } 
 
   function stockDataInputs(datas) {
 
-    let localUser = inputUserEmail.substring(0, inputUserEmail.indexOf("@"));
+    let localUser = inputUserEmail.substring(0, inputUserEmail.indexOf("@")) ?? 'random';
 
     // Stock Credits in LocalStorage
     localStorage.setItem(`user-${localUser}`, JSON.stringify(datas));
     
   }
 
+
+  useEffect(() => {
+
+    
+      if(token){
+
+        stockDataInputs(userCredits);
+        console.log(localStorage);
+
+      }
+
+   }, [token]);
 
   // async function login(url,payload) {
 
@@ -151,9 +183,10 @@ const FormSignin = () => {
             <input type="password" id="password" name="password" placeholder="*********"  onChange={(e) =>getUserPass(e.target.value)} />
       </div>
       <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
-            <label htmlFor="remember-me">Remember me</label>
+            <input type="checkbox" id="remember-me" onChange={(e) => handleAlreadyLogin(e)} />
+            <label htmlFor="remember-me" >Remember me</label>
       </div>
+
       <button className="sign-in-button">Sign In</button>
 
 
