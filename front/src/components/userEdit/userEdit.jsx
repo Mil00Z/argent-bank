@@ -17,19 +17,19 @@ const UserEdit = (props) => {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
 
+
+  const dispatch = useDispatch();
 
   const user = useSelector(state => state.user?.userCredits);
 
-  const token = useSelector(state => state.auth?.token);
-
-
   // Hook from RTK Mutation
-  const [getUser,{data,error,isLoading}] = useGetUserMutation();
+  // const [getUser,{data,error,isLoading}] = useGetUserMutation();
 
   const [updateUser,{dataUpdateUser,errorUpdateUser,isLoadingUpdateUser}] = useUpdateUserMutation();
 
-  const dispatch = useDispatch();
+
 
  
 
@@ -40,15 +40,16 @@ const UserEdit = (props) => {
     //check si besoin de verif les inputs ?
     // voir si on doit récupérer ça différement qu'en JS natif direct ?
 
-    let name = document.querySelector('input[name="firstName"]').value;
+    // let name = document.querySelector('input[name="firstName"]').value;
 
-    let lastname = document.querySelector('input[name="lastName"]').value;
+    // let lastname = document.querySelector('input[name="lastName"]').value;
 
 
     const updatedDatasUser = {
       ...user,
-      firstName:name,
-      lastName:lastname
+      firstName:firstName,
+      lastName:lastName,
+      email:email
     }
 
     //Update Store
@@ -57,13 +58,16 @@ const UserEdit = (props) => {
     //Update API
     try{
 
-      const response = await updateUser({firstName:name,lastName:lastname}).unwrap();
+      const response = await updateUser({
+        firstName:firstName,
+        lastName:lastName,
+        email:email
+      }).unwrap();
 
-      console.log(response);
+      // console.log(response);
 
     } catch(error){console.warn(error)}
 
-    
   } 
 
 
@@ -78,6 +82,7 @@ return (
 
         <input type="text" name="firstName" defaultValue={user.firstName} placeholder='le prénom'  onChange={(e)=>{setFirstName(e.target.value)}}/>
         <input type="text" name="lastName" id="" defaultValue={user.lastName} placeholder='le nom' onChange={(e)=>{setLastName(e.target.value)}}/>
+        <input type="email" name="email" id="" defaultValue={user.email} placeholder='le mail' onChange={(e)=>{setEmail(e.target.value)}}/>
 
       </div>
 
