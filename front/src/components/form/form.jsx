@@ -117,7 +117,6 @@ const FormSignin = () => {
 
   useEffect(() => {
 
-    
       if(token){
 
         stockDataInputs(userCredits);
@@ -126,6 +125,8 @@ const FormSignin = () => {
       }
 
    }, [token]);
+
+
 
   // async function login(url,payload) {
 
@@ -187,7 +188,7 @@ const FormSignin = () => {
             <label htmlFor="remember-me" >Remember me</label>
       </div>
 
-      <button className="sign-in-button">Sign In</button>
+      <button className="btn sign-in-button">Sign In</button>
 
 
       {error ? (<UserError errorFlow={error.data.message} layout={'login'} />) : null }
