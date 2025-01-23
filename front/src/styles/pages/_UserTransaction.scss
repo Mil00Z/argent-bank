@@ -1,0 +1,50 @@
+.transaction{
+  color:var(--white-color);
+}
+
+
+.transaction-content-header{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color:var(--black-color);
+  background:var(--white-color);
+  padding:var(--reg-spacing);
+  border-block:2px grey solid;
+}
+
+.row{
+
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  &-header{
+    padding:2rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  &-datas{
+    flex-wrap: wrap;
+    padding:2rem;
+    margin-bottom: 1rem;
+    border-block:2px grey solid;
+    background-color: var(--white-color);
+    color:var(--black-color);
+  }
+
+  
+  .options{
+    --spacing:1.5rem;
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    margin-block:2rem;
+    row-gap:var(--spacing);
+
+  }
+}
+

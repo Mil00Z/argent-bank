@@ -1,5 +1,5 @@
 import { useState,useEffect, Component} from 'react'
-import {useNavigate} from 'react-router'
+import {useNavigate,Link} from 'react-router'
 
 import { useSelector,useDispatch} from 'react-redux';
 
@@ -166,7 +166,7 @@ if(!loged) return <UserError />;
             <p className="account-amount-description">Current Balance</p>
           </div>
           <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
+            <Link className="btn transaction-button" to="/profile/transactions/">View transactions</Link>
           </div>
         </section>
 

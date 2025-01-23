@@ -58,6 +58,11 @@
     margin-top: 1rem;
   }
 
+  &.transaction-button{
+    --styles:var(--secondary-color);
+    --color:var(--white-color);
+  }
+
   &:disabled{
     --styles:grey;
     --color:var(--white-color)

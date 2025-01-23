@@ -12,7 +12,7 @@ import Home from '@pages/Home'
 import SignIn from '@pages/SignIn'
 import User from '@pages/User'
 import NotFound from '@pages/NotFound'
-
+import UserTransaction from '@pages/UserTransaction'
 
 import '@styles/main.scss'
 
@@ -37,6 +37,10 @@ import '@styles/main.scss'
         path: '/profile',
         element: <User />,
         pageClasses :'user'
+      },{
+        path:'/profile/transactions/',
+        element: <UserTransaction />,
+        pageClasses :'transaction bg-dark'
       },
       {
         path: "*",
