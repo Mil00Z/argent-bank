@@ -86,7 +86,19 @@ return (
 
       </div>
 
-      {!user ? ( <button type="submit" disabled className="btn freezed-button">Waiting for autorisation</button>):( <button type="submit" className="btn sign-in-button" onClick={(e) => {handleSubmit(e)}}>Mettre à jour</button>)}
+      {!user ? ( <button type="submit" disabled className="btn freezed-button">Waiting for autorisation</button>):( 
+        <>
+        <div className="btn-wrapper">
+
+          <button type="submit" className="btn sign-in-button" onClick={(e) => {handleSubmit(e)}}>Mettre à jour</button>
+
+          <button className='btn cancel-button' disabled>Cancel</button>
+
+        </div>
+           
+        </>
+
+        )}
        
       </form>
 
