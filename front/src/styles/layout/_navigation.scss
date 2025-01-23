@@ -4,13 +4,14 @@
   align-items: center;
   padding: 0.313rem var(--reg-spacing);
   background-color: var(--white-color);
+  column-gap:.5rem;
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--secondary-color);
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: var(--primary-color);
     }
   }
 
@@ -20,6 +21,7 @@
     position: relative;
 
     &:hover{
+      cursor: pointer;
       text-decoration: underline;
 
       .another-datas{
@@ -29,6 +31,15 @@
       i {
         color:var(--primary-color);
       }
+    }
+
+    &.logout{
+      padding: .5rem;
+      background: none;
+      border: none;
+      font-size: 1rem;
+      // font-weight: bold;
+      color: var(--secondary-color);
     }
 
     .another-datas {
@@ -46,14 +57,14 @@
     }
 
     > i {
-      margin-right: 10px;
+      margin-right: 8px;
     }
 
   }
 
   &-logo {
     display: flex;
-  align-items: center;
+    align-items: center;
 
     &-image{
       max-width: 100%;

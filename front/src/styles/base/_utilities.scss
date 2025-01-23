@@ -30,3 +30,37 @@
   // justify-content:center;
   // align-items: center;
 }
+
+.btn {
+  --styles:var(--white-color);
+  --color:var(--black-color);
+  display: block;
+  width: 100%;
+  padding: .5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-color: var(--styles);
+  background:var(--styles);
+  color:var(--color);
+
+  &.sign-in-button{
+    --styles:var(--primary-color);
+    --color:var(--white-color);
+    //  margin-top: 1rem;
+  }
+
+  &.cancel-button{
+    --styles:var(--debeug-color);
+    --color:var(--white-color);
+  }
+
+  &.freezed-button {
+    margin-top: 1rem;
+  }
+
+  &:disabled{
+    --styles:grey;
+    --color:var(--white-color)
+    cursor: not-allowed;
+  }
+}
