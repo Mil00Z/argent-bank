@@ -89,7 +89,7 @@ const Navigation = () => {
                     {user?.firstName}
                     <span className="another-datas"> dernier update : {formatedDate}</span>
               </Link>
-              <button className="main-nav-item" onClick={handleLogout}>
+              <button className="logout main-nav-item" onClick={handleLogout}>
                     <i className="fa fa-sign-out"></i>
                     Sign Out
               </button>
