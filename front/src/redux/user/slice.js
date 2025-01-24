@@ -1,17 +1,25 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 
-const initialiasedState = {userCredits:null}
+const initialiasedState = {
+userCredits:{
+  firstName: '',
+  lastName: '',
+  email: '',
+  }
+}
 
 export const userSlice = createSlice({
   name: 'user',
   initialState:initialiasedState,
   reducers : {
     setUser : (state,action) => {
-      return {...state,userCredits:action.payload}
+      state.userCredits = action.payload;
+      // return {...state,userCredits:action.payload}
     },
     updateUser : (state,action) => {
-      return {...state,userUpdates:action.payload}
+      state.userUpdates = action.payload;
+      // return {...state,userUpdates:action.payload}
     },
     reset : () => initialiasedState
   }
