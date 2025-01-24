@@ -52,7 +52,6 @@ const User = () => {
       navigate('/login');
     }
 
-  
 
   },[])
 
@@ -79,34 +78,34 @@ const User = () => {
 
   
   // Fetch Standard Query
-  async function checkUser(url,token){
+  // async function checkUser(url,token){
 
-    try {
+  //   try {
 
-      let response = await fetch(url,{
-          method:"POST",
-          headers : {
-            "Content-Type":"application/json",
-            "Authorization": `Bearer ${token}`
-          }
-        });
+  //     let response = await fetch(url,{
+  //         method:"POST",
+  //         headers : {
+  //           "Content-Type":"application/json",
+  //           "Authorization": `Bearer ${token}`
+  //         }
+  //       });
 
-        let datas = await response.json();
+  //       let datas = await response.json();
 
-        if (datas.status === 200) {
+  //       if (datas.status === 200) {
 
-          dispatch(userSlice.actions.setUser(datas.body));
+  //         dispatch(userSlice.actions.setUser(datas.body));
 
-          setLoged(true);
+  //         setLoged(true);
 
-        } 
+  //       } 
             
-    } catch(error) {
+  //   } catch(error) {
       
-        console.warn(error);
-    }
+  //       console.warn(error);
+  //   }
 
-  }
+  // }
 
 
   function triggerEditUser(){
@@ -120,13 +119,10 @@ const User = () => {
 
 //Scenarii
 
-// if(isLoading) return <h2>Loading...
-//   <p>{ token ? token : 'No Token'}</p> 
-// </h2>
+// Animation avec quoi : Loader Maison ?
+if(isLoading) return <h2>Loading...</h2>
  
-
-if(!loged) return <UserError />;
-
+if(!token) return <UserError />;
 
 
   return(

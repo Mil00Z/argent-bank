@@ -15,14 +15,18 @@ const UserEdit = (props) => {
 
   const {fadeIn} = props
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  //
+  const user = useSelector(state => state.user?.userCredits);
+
+  //Get Datas from Store
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [email, setEmail] = useState(user.email);
 
 
   const dispatch = useDispatch();
 
-  const user = useSelector(state => state.user?.userCredits);
+  
 
   // Hook from RTK Mutation
   // const [getUser,{data,error,isLoading}] = useGetUserMutation();
@@ -52,8 +56,7 @@ const UserEdit = (props) => {
       email:email
     }
 
-    //Update Store
-    dispatch(userSlice.actions.setUser(updatedDatasUser))
+    
    
     //Update API
     try{
@@ -66,6 +69,11 @@ const UserEdit = (props) => {
 
       // console.log(response);
 
+      //Update Store
+      if (!errorUpdateUser){
+        dispatch(userSlice.actions.setUser(updatedDatasUser))
+      }
+      
     } catch(error){console.warn(error)}
 
   } 
