@@ -6,8 +6,8 @@ export const userUpdateApi = createApi({
     baseUrl: 'http://localhost:3001/api/v1' ,
     prepareHeaders: (headers, { getState }) => {
       //Type de contenu
-      headers.set('Accept', 'application/json');
-      headers.set('Access-Control-Allow-Headers','Accept');
+      // headers.set('Accept', 'application/json');
+      // headers.set('Access-Control-Allow-Headers','Accept');
 
       // Récupérer le token depuis le store Redux 
       const token = getState().auth?.token;
@@ -15,6 +15,7 @@ export const userUpdateApi = createApi({
         if (token){
           headers.set('Authorization', `Bearer ${token}`);
         }
+        
         return headers;
     }
     },  
