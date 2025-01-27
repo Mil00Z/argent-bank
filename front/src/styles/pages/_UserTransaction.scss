@@ -25,6 +25,7 @@
     padding:2rem;
     margin-bottom: 1rem;
     text-transform: uppercase;
+    color:var(--white-color);
   }
 
   &-datas{
@@ -45,6 +46,14 @@
     margin-block:2rem;
     row-gap:var(--spacing);
 
+      i {
+        cursor: pointer;
+      }
+
   }
+}
+
+.notes{
+  text-wrap: balance;
 }
 

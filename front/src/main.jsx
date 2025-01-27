@@ -38,7 +38,7 @@ import '@styles/main.scss'
         element: <User />,
         pageClasses :'user'
       },{
-        path:'/profile/transactions/',
+        path:'/account/transactions',
         element: <UserTransaction />,
         pageClasses :'transaction bg-dark'
       },
