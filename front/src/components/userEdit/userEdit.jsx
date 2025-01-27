@@ -1,14 +1,12 @@
 import {useState} from 'react'
 import {useSelector,useDispatch} from 'react-redux'
 
-import { useGetUserMutation} from '../../redux/user/api'
 import { useUpdateUserMutation } from '../../redux/user/apiUpdate'
 
 import {userSlice} from '../../redux/user/slice'
 
 
 import '@styles/pages/_User.scss'
-
 
 
 const UserEdit = (props) => {  
@@ -22,9 +20,18 @@ const UserEdit = (props) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
+  const [createdAt, setCreatedAt] = useState(user.createdAt);
 
 
   const dispatch = useDispatch();
+
+
+  function dateFormat(incomingDate) {
+
+    const date = new Date(incomingDate);
+    
+    return date.toLocaleString('fr-FR');
+  }
 
   
 
@@ -34,21 +41,11 @@ const UserEdit = (props) => {
   const [updateUser,{dataUpdateUser,errorUpdateUser,isLoadingUpdateUser}] = useUpdateUserMutation();
 
 
-
- 
-
   async function handleSubmit(e) {
 
     e.preventDefault();
 
-    //check si besoin de verif les inputs ?
-    // voir si on doit récupérer ça différement qu'en JS natif direct ?
-
-    // let name = document.querySelector('input[name="firstName"]').value;
-
-    // let lastname = document.querySelector('input[name="lastName"]').value;
-
-
+  
     const updatedDatasUser = {
       ...user,
       firstName:firstName,
@@ -67,8 +64,7 @@ const UserEdit = (props) => {
         email:email
       }).unwrap();
 
-      // console.log(response);
-
+    
       //Update Store
       if (!errorUpdateUser){
         dispatch(userSlice.actions.setUser(updatedDatasUser))
@@ -78,8 +74,7 @@ const UserEdit = (props) => {
 
   } 
 
-
-  
+ 
 return (
   <>
     <section className={`user-edit-container ${fadeIn ? 'pop-in' : ''}`}>
@@ -90,8 +85,9 @@ return (
 
         <input type="text" name="firstName" defaultValue={user.firstName} placeholder='le prénom'  onChange={(e)=>{setFirstName(e.target.value)}}/>
         <input type="text" name="lastName" id="" defaultValue={user.lastName} placeholder='le nom' onChange={(e)=>{setLastName(e.target.value)}}/>
-        <input type="email" name="email" id="" defaultValue={user.email} placeholder='le mail' onChange={(e)=>{setEmail(e.target.value)}}/>
+        <input type="email" name="email" id="email" disabled defaultValue={user.email} placeholder='le mail' onChange={(e)=>{setEmail(e.target.value)}}/>
 
+      <div className="input-date">Compte crée le : {dateFormat(createdAt)}</div>
       </div>
 
       {!user ? ( <button type="submit" disabled className="btn freezed-button">Waiting for autorisation</button>):( 
