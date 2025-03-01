@@ -1,4 +1,4 @@
-import { useState,useEffect, use } from "react";
+import { useState,useEffect } from "react";
 import {useNavigate} from 'react-router';
 
 import {useDispatch,useSelector} from 'react-redux';
@@ -42,14 +42,13 @@ const FormSignin = () => {
 
    
     //Ask to API if the access is OK
-    const response = await login(datas).unwrap();
+    try{
 
-    console.log(response);
+      const response = await login(datas).unwrap();
 
-    if(response) {
+      if(response) {
       
       dispatch(authSlice.actions.setToken(response.body.token));
-
 
       //Get local values in inputs
       stockDataInputs(datas);
@@ -58,6 +57,10 @@ const FormSignin = () => {
 
     }
 
+    } catch(error) {
+      //  return (<UserError>'wtf'</UserError>)
+    }
+    
   };
 
 
@@ -98,7 +101,7 @@ const FormSignin = () => {
 
     } else {
 
-      console.log(userCredits, localStorage);
+      // console.log(userCredits, localStorage);
 
       stockDataInputs(userCredits);
 
@@ -118,60 +121,13 @@ const FormSignin = () => {
   useEffect(() => {
 
       if(token){
-
         stockDataInputs(userCredits);
-        console.log(localStorage);
-
       }
 
    }, [token]);
 
 
-
-  // async function login(url,payload) {
-
-  //   let params = {
-  //     method:"POST",
-  //     body: JSON.stringify(payload),
-  //     headers : {
-  //       "Content-Type":"application/json"
-  //     }
-  //   }
-
-  //   try {
-
-  //     const response = await fetch(url,params);
-  //     const datas = await response.json();
-
-  //     // console.log(datas);
-
-  //       if (datas.status === 400) {
-
-  //         setError(datas.message);
-
-  //       } else {
-
-  //         setError(null);
-
-  //         localStorage.setItem(`user-token`, JSON.stringify(datas.body.token));
-
-  //         navigate("/profile");
-
-  //       }
-
-  //   } catch (error) {
-      
-  //       setError('Error API Call : No datas Fetched');
-
-  //       console.warn(error);
-
-      
-  //     }
-    
-  // }
-
- 
-
+   
   return(
     <form id="signin" onSubmit={triggerForm}>
 
@@ -191,7 +147,7 @@ const FormSignin = () => {
       <button className="btn sign-in-button">Sign In</button>
 
 
-      {error ? (<UserError errorFlow={error.data.message} layout={'login'} />) : null }
+      {error ? (<UserError errorFlow={error.error ?? 'Error API Call : No datas Fetched'} layout={'login'} />) : null }
 
     </form>
   )

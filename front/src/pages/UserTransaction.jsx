@@ -10,11 +10,10 @@ const UserTransaction = () => {
 
  const token = useSelector(state => state.auth?.token);
 
-const user = useSelector(state => state.user?.userCredits);
+  const user = useSelector(state => state.user?.userCredits);
 
  const navigate = useNavigate();
 
- console.log(user);
 
 
   useEffect(() => {
@@ -24,6 +23,7 @@ const user = useSelector(state => state.user?.userCredits);
     }
 
   }, [token]);
+
 
 
   return (

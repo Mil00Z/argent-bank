@@ -52,6 +52,7 @@
   &.cancel-button{
     --styles:var(--debeug-color);
     --color:var(--white-color);
+    cursor: crosshair;
   }
 
   &.freezed-button {
@@ -59,8 +60,11 @@
   }
 
   &.transaction-button{
-    --styles:var(--secondary-color);
+    --styles:var(--primary-color);
     --color:var(--white-color);
+    padding:.85rem;
+    text-align: center;
+    text-decoration: none;
   }
 
   &:disabled{
@@ -68,4 +72,12 @@
     --color:var(--white-color)
     cursor: not-allowed;
   }
+}
+
+.transaction-button{
+  --styles:var(--primary-color);
+  --color:var(--white-color);
+  padding:.85rem;
+  text-align: center;
+  text-decoration: none;
 }

@@ -1,4 +1,4 @@
-import { useState,useEffect, Component} from 'react'
+import { useState,useEffect} from 'react'
 import {useNavigate,Link} from 'react-router'
 
 import { useSelector,useDispatch} from 'react-redux';
@@ -40,13 +40,10 @@ const User = () => {
   
   useEffect(() => {
 
-    // console.log('recorded token',token);
 
     if(token){
 
         getUserProfile()
-
-      // checkUser('http://localhost:3001/api/v1/user/profile',token);
 
     } else {
       navigate('/login');
@@ -71,49 +68,18 @@ const User = () => {
 
   } catch(error) {
 
-    console.warn(error);
+    // console.warn(error);
   }
 
 }
 
-  
-  // Fetch Standard Query
-  // async function checkUser(url,token){
 
-  //   try {
-
-  //     let response = await fetch(url,{
-  //         method:"POST",
-  //         headers : {
-  //           "Content-Type":"application/json",
-  //           "Authorization": `Bearer ${token}`
-  //         }
-  //       });
-
-  //       let datas = await response.json();
-
-  //       if (datas.status === 200) {
-
-  //         dispatch(userSlice.actions.setUser(datas.body));
-
-  //         setLoged(true);
-
-  //       } 
-            
-  //   } catch(error) {
-      
-  //       console.warn(error);
-  //   }
-
-  // }
-
-
-  function triggerEditUser(){
+function triggerEditUser(){
 
       setIsEdit(isEdit => true);
 
       setAnimate(animate => true);
-  }
+}
 
 
 
@@ -132,7 +98,7 @@ if(!token) return <UserError />;
           <button className="edit-button" onClick={() => {triggerEditUser()}}>Edit Name</button>
         </div>
         
-        {isEdit ? <UserEdit fadeIn={animate} /> : null}
+        {isEdit ? <UserEdit fadeIn={animate} isEdit={isEdit} setIsEdit={setIsEdit} /> : null}
 
         <h2 className="sr-only" data-user={user?.id}>Accounts</h2>
         <section className="account" data-transac='AZX123CDFGH'>
@@ -142,7 +108,7 @@ if(!token) return <UserError />;
             <p className="account-amount-description">Available Balance</p>
           </div>
           <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
+            <a className="transaction-button">View transactions</a>
           </div>
         </section>
         <section className="account" data-transac="GH456TRSDFG">
@@ -152,7 +118,7 @@ if(!token) return <UserError />;
             <p className="account-amount-description">Available Balance</p>
           </div>
           <div className="account-content-wrapper cta">
-            <button className="transaction-button">View transactions</button>
+            <a className="transaction-button">View transactions</a>
           </div>
         </section>
         <section className="account" data-transac="JKL789ERTYU">
@@ -162,7 +128,7 @@ if(!token) return <UserError />;
             <p className="account-amount-description">Current Balance</p>
           </div>
           <div className="account-content-wrapper cta">
-            <Link className="btn transaction-button" to="/account/transactions/" data-id={user?.id}>View transactions</Link>
+            <Link className="transaction-button" to="/account/transactions/" data-id={user?.id}>View transactions</Link>
           </div>
         </section>
 

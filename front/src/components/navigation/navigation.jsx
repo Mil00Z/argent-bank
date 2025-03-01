@@ -49,7 +49,6 @@ const Navigation = () => {
   
   const handleLogout = () => {
 
-
     store.dispatch(authSlice.actions.reset());
 
     store.dispatch(userSlice.actions.reset());

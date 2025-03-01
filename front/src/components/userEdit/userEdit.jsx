@@ -9,18 +9,20 @@ import {userSlice} from '../../redux/user/slice'
 import '@styles/pages/_User.scss'
 
 
-const UserEdit = (props) => {  
+const UserEdit = ({fadeIn,isEdit,setIsEdit}) => {  
 
-  const {fadeIn} = props
+   // Hook from RTK Mutation
+   const [updateUser,{dataUpdateUser,errorUpdateUser,isLoadingUpdateUser}] = useUpdateUserMutation();
 
-  //
-  const user = useSelector(state => state.user?.userCredits);
 
   //Get Datas from Store
+  const user = useSelector(state => state.user?.userCredits);
+
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
   const [createdAt, setCreatedAt] = useState(user.createdAt);
+  
 
 
   const dispatch = useDispatch();
@@ -32,13 +34,6 @@ const UserEdit = (props) => {
     
     return date.toLocaleString('fr-FR');
   }
-
-  
-
-  // Hook from RTK Mutation
-  // const [getUser,{data,error,isLoading}] = useGetUserMutation();
-
-  const [updateUser,{dataUpdateUser,errorUpdateUser,isLoadingUpdateUser}] = useUpdateUserMutation();
 
 
   async function handleSubmit(e) {
@@ -74,10 +69,20 @@ const UserEdit = (props) => {
 
   } 
 
+
+  function cancelPanelUser(e) {
+
+    e.preventDefault();
+    setIsEdit((isEdit) => false);
+  
+}
+
+
+
  
 return (
   <>
-    <section className={`user-edit-container ${fadeIn ? 'pop-in' : ''}`}>
+    <section className={`user-edit-container ${fadeIn ? 'pop-in' : 'pop-out'}`}>
 
       <form action="" id="user-edit" className="ui-form">
     
@@ -96,7 +101,7 @@ return (
 
           <button type="submit" className="btn sign-in-button" onClick={(e) => {handleSubmit(e)}}>Mettre à jour</button>
 
-          <button className='btn cancel-button' disabled>Cancel</button>
+          <button className='btn cancel-button' onClick={(e) => {cancelPanelUser(e)}}>Cancel</button>
 
         </div>
            
