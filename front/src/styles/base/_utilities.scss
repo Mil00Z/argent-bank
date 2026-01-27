@@ -7,6 +7,7 @@
 }
 
 .main {
+  
   flex: 1;
 }
 
@@ -22,4 +23,61 @@
   position: absolute !important;
   width: 1px !important;
   white-space: nowrap !important; /* 3 */
+}
+
+.ui-form{
+  // display: flex;
+  // justify-content:center;
+  // align-items: center;
+}
+
+.btn {
+  --styles:var(--white-color);
+  --color:var(--black-color);
+  display: block;
+  width: 100%;
+  padding: .5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-color: var(--styles);
+  background:var(--styles);
+  color:var(--color);
+
+  &.sign-in-button{
+    --styles:var(--primary-color);
+    --color:var(--white-color);
+    //  margin-top: 1rem;
+  }
+
+  &.cancel-button{
+    --styles:var(--debeug-color);
+    --color:var(--white-color);
+    cursor: crosshair;
+  }
+
+  &.freezed-button {
+    margin-top: 1rem;
+  }
+
+  &.transaction-button{
+    --styles:var(--primary-color);
+    --color:var(--white-color);
+    padding:.85rem;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  &:disabled{
+    --styles:grey;
+    --color:var(--white-color)
+    cursor: not-allowed;
+  }
+}
+
+.transaction-button{
+  --styles:var(--primary-color);
+  --color:var(--white-color);
+  padding:.85rem;
+  text-align: center;
+  text-decoration: none;
 }

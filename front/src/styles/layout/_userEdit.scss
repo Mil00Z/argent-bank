@@ -1,0 +1,35 @@
+.user-edit-container{
+  --sizes: 450px;
+  --op:0;
+  width: var(--sizes);
+  margin: 0 auto 3rem;
+  box-sizing: border-box;
+  background-color: var(--white-color);
+  border-radius: 10px;
+  padding: var(--reg-spacing);
+  transition: all .66s .33s ease-in-out;
+  opacity: var(--op);
+
+  .input-wrapper{
+    row-gap: 1rem;
+  }
+
+  .btn-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1rem;
+  }
+
+  &.pop-in{
+      --op:1;
+      transform: scale(1.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+
+#user-edit{
+  transition: all .25s ease-in-out;
+}
+

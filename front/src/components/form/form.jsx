@@ -1,37 +1,65 @@
-import { useState } from "react";
-import {useOutletContext, useNavigate} from 'react-router';
+import { useState,useEffect } from "react";
+import {useNavigate} from 'react-router';
+
+import {useDispatch,useSelector} from 'react-redux';
+import {authSlice} from "../../redux/auth/slice";
+
+import { useLoginMutation } from "@root/redux/auth/api";
+
+
+import UserError from '@components/errors/userError'
 
 
 const FormSignin = () => {
 
-  const {user} = useOutletContext();
 
   const [inputUserEmail,setInputUserEmail] = useState('');
   const [inputUserPass,setInputUserPass] = useState();
 
-  
-  const [error, setError] = useState(null)
-
   const navigate = useNavigate();
-  
 
-  const triggerForm = (e) => {
+  const token = useSelector(state => state.auth?.token);
+
+  const userCredits = useSelector(state => state.user?.userCredits);
+
+  const dispatch = useDispatch();
+
+
+  // RTK Query API
+  const [login, { data, error, isLoading }] = useLoginMutation();
+
+  
+  const triggerForm = async (e) => {
 
     //Not refresh
     e.preventDefault();
+
 
     let datas = {
       email: inputUserEmail,
       password: inputUserPass
     }
 
+   
     //Ask to API if the access is OK
-    login('http://localhost:3001/api/v1/user/login',datas);
+    try{
 
-  
-    //Get local values in inputs
-    stockDataInputs(datas);
+      const response = await login(datas).unwrap();
 
+      if(response) {
+      
+      dispatch(authSlice.actions.setToken(response.body.token));
+
+      //Get local values in inputs
+      stockDataInputs(datas);
+
+      navigate('/profile');
+
+    }
+
+    } catch(error) {
+      //  return (<UserError>'wtf'</UserError>)
+    }
     
   };
 
@@ -56,74 +84,50 @@ const FormSignin = () => {
 
       setInputUserPass(value);
 
-    } 
+    } else {
+
+      //  return (<UserError>{value}</UserError>)
+    }
 
 }
 
+  function handleAlreadyLogin(e) {
+    
+    let isChecked = e.target.checked;
+
+    if (!isChecked) {
+
+      localStorage.clear();
+
+    } else {
+
+      // console.log(userCredits, localStorage);
+
+      stockDataInputs(userCredits);
+
+    }
+  } 
 
   function stockDataInputs(datas) {
 
-    // let form = document.querySelector(`${target}`);
-
-    // let formDatas = new FormData(form);
+    let localUser = inputUserEmail.substring(0, inputUserEmail.indexOf("@")) ?? 'random';
 
     // Stock Credits in LocalStorage
-    localStorage.setItem(`user-machin`, JSON.stringify(datas));
+    localStorage.setItem(`user-${localUser}`, JSON.stringify(datas));
     
   }
 
-  function checkUserStorage() {
 
-    let checkUser = JSON.parse(localStorage.getItem(`user-${inputUsername}`)) || false;
+  useEffect(() => {
 
-      return checkUser
-
-  }
-
-  async function login(url,payload) {
-
-    let params = {
-      method:"POST",
-      body: JSON.stringify(payload),
-      headers : {
-        "Content-Type":"application/json"
+      if(token){
+        stockDataInputs(userCredits);
       }
-    }
 
-    try {
+   }, [token]);
 
-      const response = await fetch(url,params);
-      const datas = await response.json();
 
-      // console.log(datas);
-
-        if (datas.status === 400) {
-
-          setError(datas.message);
-
-        } else {
-
-          setError(null);
-
-          localStorage.setItem(`user-token`, JSON.stringify(datas.body.token));
-
-          navigate("/profile");
-
-        }
-
-    } catch (error) {
-      
-        setError('Error API Call : No datas Fetched');
-
-        console.warn(error);
-
-      
-      }
-    
-  }
-
- 
-
+   
   return(
     <form id="signin" onSubmit={triggerForm}>
 
@@ -136,13 +140,14 @@ const FormSignin = () => {
             <input type="password" id="password" name="password" placeholder="*********"  onChange={(e) =>getUserPass(e.target.value)} />
       </div>
       <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
-            <label htmlFor="remember-me">Remember me</label>
+            <input type="checkbox" id="remember-me" onChange={(e) => handleAlreadyLogin(e)} />
+            <label htmlFor="remember-me" >Remember me</label>
       </div>
-      <button className="sign-in-button">Sign In</button>
+
+      <button className="btn sign-in-button">Sign In</button>
 
 
-      {error ? (<p className="error">{error}</p>) : null }
+      {error ? (<UserError errorFlow={error.error ?? 'Error API Call : No datas Fetched'} layout={'login'} />) : null }
 
     </form>
   )

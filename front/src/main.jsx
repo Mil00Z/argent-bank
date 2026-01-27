@@ -1,6 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+
 import { createBrowserRouter, RouterProvider } from 'react-router'
+
+import { Provider } from "react-redux"
+import { store } from '@root/redux/store'
 
 
 import Root from '@pages/Root.jsx'
@@ -8,7 +12,7 @@ import Home from '@pages/Home'
 import SignIn from '@pages/SignIn'
 import User from '@pages/User'
 import NotFound from '@pages/NotFound'
-
+import UserTransaction from '@pages/UserTransaction'
 
 import '@styles/main.scss'
 
@@ -33,6 +37,10 @@ import '@styles/main.scss'
         path: '/profile',
         element: <User />,
         pageClasses :'user'
+      },{
+        path:'/account/transactions',
+        element: <UserTransaction />,
+        pageClasses :'transaction bg-dark'
       },
       {
         path: "*",
@@ -44,7 +52,9 @@ import '@styles/main.scss'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );
 
